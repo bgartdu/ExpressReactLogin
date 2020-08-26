@@ -15,12 +15,19 @@ import Login from "./pages/Login";
 
 
 class App extends React.Component {
+
 	
 	constructor() {
 		super();
 		this.state = {
 			username: null,
 			token: null,
+			onLogin: (creds) => {
+				localStorage["userLogin"] = JSON.stringify(creds);
+				this.setState(creds);
+				window.location="/";
+
+			}
 		}
 	}
 
