@@ -12,6 +12,7 @@ import FourOhFour from "./pages/FourOhFour";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ControlPanel from './pages/ControlPanel';
+import NewUser from './pages/NewUser';
 
 
 
@@ -28,6 +29,11 @@ class App extends React.Component {
 				this.setState(creds);
 				window.location="/";
 
+			},
+			logout: () => {
+				localStorage["userLogin"] = ""
+				this.setState({ username: null, token: null })
+				window.location = "/"
 			}
 		}
 	}
@@ -55,6 +61,7 @@ class App extends React.Component {
 								<Switch>
 									<Route exact path="/" component={Home} />
 									<Route exact path="/login" component={Login} />
+									<Route exact path="/newuser" component={NewUser} />
 									<Route exact path="/controlPanel" component={ControlPanel} />
 									<Route component={FourOhFour} />
 								</Switch>

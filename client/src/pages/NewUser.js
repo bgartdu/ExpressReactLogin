@@ -3,7 +3,7 @@ import Global from "../Global";
 import axios from "axios";
 
 
-class Login extends React.Component {
+class NewUser extends React.Component {
 	static contextType = Global;
 	
 	constructor() {
@@ -13,11 +13,7 @@ class Login extends React.Component {
 			 password: "",
 			 message: "",
 		 }
-
-		
 	}
-
-
 
 	captureInput = (event) => {
 		const varName = event.target.id;
@@ -29,10 +25,11 @@ class Login extends React.Component {
 		this.setState(payload);
 	}
 	
-	doLogin = async () =>{
+	doNewUser = async () =>{
+		console.log("createNewUser")
 		const { username, password } = this.state;
 
-		const result = await axios.post("http://localhost:3001/login", {
+		const result = await axios.post("http://localhost:3001/newuser", {
 			username, password
 		})
 
@@ -51,7 +48,7 @@ class Login extends React.Component {
 			return<div></div>
 		}
 		return <div className = "row">
-			<h1>Login</h1>
+			<h1>Sign Up</h1>
 			<div className="input-field col s12">
 				<input onChange ={this.captureInput} id="username" type="text" className="validate" />
 				<label for="username">Username</label>
@@ -61,11 +58,11 @@ class Login extends React.Component {
 				<label for="password">Password</label>
 			</div>
 
-			<a onClick ={this.doLogin} id= "loginButton" className="waves-effect waves-light btn">LOGIN</a>
+			<a onClick ={this.doNewUser} id= "loginButton" className="waves-effect waves-light btn">Sign Up</a>
 
 			<div className="red-text">{this.state.message}</div>
 		</div>
 	}	
 }
 
-export default Login;
+export default NewUser;
