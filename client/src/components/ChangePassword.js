@@ -1,5 +1,6 @@
 import React from 'react';
 import Global from "../Global";
+import axios from 'axios';
 
 
 class ChangePassword extends React.Component {
@@ -25,7 +26,21 @@ class ChangePassword extends React.Component {
 	}
 
 	doChangePassword = async (event) => {
-		
+		const { oldPassword, newPassword, confirmPassword } = this.state
+		const { token } = this.context;
+
+		const result = await axios.post("http://localhost:3001/changePassword", {
+			oldPassword, newPassword, confirmPassword, token
+		});
+
+		const { success, message, err } = result.data;
+
+		if (success) {
+			window.M.toast({html: "password changed successfully", classes: "green"});
+		} else {
+			window.M.toast({html: "password changed failed: " + message ,classes: "red"});
+
+		}
 	}
 	
     render() {

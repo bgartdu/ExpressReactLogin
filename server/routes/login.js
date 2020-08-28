@@ -36,7 +36,7 @@ router.post("/changePassword", async function(req, res){
 		return;
 	}
 
-	const check = await db.User.findOne( { id });
+	const check = await db.User.findOne( { _id: id });
 	if (!check) {
 		res.json({
 			success: false,
@@ -115,6 +115,39 @@ router.post("/login", async function(req, res) {
 	res.json({ success: true, token });
     
 });
+
+router.post("/newuser", async function(req,res){
+	const { username, password } = req.body;
+	if (!username || !password) {
+		res.json ({
+			success:false,
+			message: "Need to provide username and password"
+		});
+		return;
+	}
+	const check = await db.User.findOne( { username } );
+	if (check) {
+		res.json ({
+			success:false,
+			message: "Please provide a unique username, this user already exists"
+		});
+		return;
+	}
+	if (!check) {
+		const hash = await argon2.hash(password)
+
+		await User.create({
+			username: username,
+			hash,
+			role: "user",
+		})
+		res.json({
+			success: true,
+			message: "new user created"
+		})
+		return;
+	}
+})
 
 
 module.exports = router;
